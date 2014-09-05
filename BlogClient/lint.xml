@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="DefaultLocale" severity="ignore" />
+    <issue id="NewApi" severity="ignore" />
+    <issue id="ShowToast" severity="ignore" />
+    <issue id="ValidFragment" severity="ignore" />
+</lint>

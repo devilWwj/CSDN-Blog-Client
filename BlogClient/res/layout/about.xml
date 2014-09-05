@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/wangyibg"
+    android:clickable="true" >
+
+    <RelativeLayout
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <include layout="@layout/back_head" />
+    </RelativeLayout>
+
+    <com.xiaowu.blogclient.view.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/wwj_748"
+        app:border_color="#FFffffff"
+        android:layout_marginTop="20dp"
+        app:border_width="1dp" />
+
+    <TextView
+        android:id="@+id/blogTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="巫_1曲待续"
+        android:textColor="@color/black"
+        android:textStyle="bold" 
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/blogSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/blogTV"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:layout_marginTop="14dp"
+        android:text="		巫_1曲待续，是CSDN人气博主小巫的博客，擅长移动开发，此客户端由小巫个人独立开发，让喜欢小巫博文的人可以专享此客户端。"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/blogLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/blogSummary"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="博客链接：http://blog.csdn.net/wwj_748"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/sinaLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/blogLink"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="新浪微博：IT_xiao小巫"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/madeby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:text="Made by IT_xiao小巫"
+        android:textColor="@color/black" />
+
+</RelativeLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/light_blue"
+    android:orientation="horizontal" >
+
+    <com.xiaowu.blogclient.view.CircleImageView
+        android:id="@+id/head_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="4dp"
+        android:src="@drawable/xiaowu" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:src="@drawable/base_action_bar_back_divider" />
+
+    <TextView
+        android:id="@+id/headTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="4dp"
+        android:layout_weight="1"
+        android:text="小巫CSDN博客"
+        android:textColor="@color/white"
+        android:textSize="21sp"
+        android:textStyle="bold" >
+    </TextView>
+
+    <!--
+        <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:visibility="invisible" />
+    -->
+
+    <ImageButton
+        android:id="@+id/personCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/base_action_bar_action_more_selector"
+        android:visibility="invisible" />
+
+</LinearLayout>

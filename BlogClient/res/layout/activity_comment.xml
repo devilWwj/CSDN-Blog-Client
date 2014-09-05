@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/newsContentView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/wangyibg"
+    android:clickable="true" >
+
+    <RelativeLayout
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <include layout="@layout/comment_head" />
+    </RelativeLayout>
+
+    <me.maxwin.view.XListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/head"
+        android:divider="@drawable/base_list_divider_drawable" />
+
+    <ProgressBar
+        android:id="@+id/newsContentPro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateDrawable="@drawable/progressbar_large"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/reLoadImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:clickable="true"
+        android:src="@drawable/base_empty_view"
+        android:visibility="invisible" />
+    <!--
+         <ImageView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/base_list_divider_drawable"
+	    />
+    -->
+    <!--
+<LinearLayout
+    android:id="@+id/commentEditL"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:layout_alignParentBottom="true"
+    android:background="@color/wangyibg"
+    >
+	<EditText 
+	    android:id="@+id/commentEdit"
+	    android:layout_width="0dp"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="1"
+	    android:drawableLeft="@drawable/biz_news_newspage_comment_icon"
+	    android:textSize="14sp"
+	    android:drawablePadding="8dp"
+	    android:layout_margin="6dp"
+	    android:hint="添加评论"/>
+	<ImageButton 
+	    android:id="@+id/commentSend"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/comment_btn"
+	    android:layout_gravity="center_vertical"
+	    android:layout_marginRight="4dp"/>
+</LinearLayout>
+    -->
+
+</RelativeLayout>
