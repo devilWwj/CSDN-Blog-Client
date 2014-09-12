@@ -208,7 +208,7 @@ public class JsoupUtil {
 			// 代码
 			if (c.select("pre").attr("name").equals("code")) {
 				blogContent.setState(Constants.DEF_BLOG_ITEM_TYPE.CODE);
-				blogContent.setContent(ToDBC(c.outerHtml()) + linkCss);
+				blogContent.setContent(ToDBC(c.outerHtml()));
 			} else {
 				blogContent.setContent(ToDBC(c.outerHtml()));
 			}
@@ -350,6 +350,10 @@ public class JsoupUtil {
 	 */
 	public static Blogger getBloggerInfo(String str) {
 
+		
+		if (str == null) {
+			return null;
+		}
 		// 获取文档内容
 		Document doc = Jsoup.parse(str);
 

@@ -112,9 +112,9 @@ public final class R {
 		public static final int visibility = 0x7f010021;
 	}
 	public static final class drawable {
-		public static final int default_ptr_flip_bottom = 0x7f020021;
-		public static final int ic_launcher = 0x7f020026;
-		public static final int xlistview_arrow = 0x7f0200c1;
+		public static final int default_ptr_flip_bottom = 0x7f020022;
+		public static final int ic_launcher = 0x7f020027;
+		public static final int xlistview_arrow = 0x7f0200c2;
 	}
 	public static final class id {
 		public static final int afterDescendants = 0x7f05002b;

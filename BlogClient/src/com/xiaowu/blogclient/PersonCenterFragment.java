@@ -5,6 +5,8 @@ import net.youmi.android.AdManager;
 import net.youmi.android.banner.AdSize;
 import net.youmi.android.banner.AdView;
 import net.youmi.android.banner.AdViewListener;
+import net.youmi.android.diy.banner.DiyAdSize;
+import net.youmi.android.diy.banner.DiyBanner;
 import net.youmi.android.spot.SpotDialogListener;
 import net.youmi.android.spot.SpotManager;
 import android.content.Context;
@@ -22,12 +24,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.QQShareContent;
+import com.umeng.socialize.media.QZoneShareContent;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.EmailHandler;
 import com.umeng.socialize.sso.QZoneSsoHandler;
@@ -38,6 +42,8 @@ import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
+import com.umeng.socialize.weixin.media.CircleShareContent;
+import com.umeng.socialize.weixin.media.WeiXinShareContent;
 import com.umeng.update.UmengUpdateAgent;
 import com.umeng.update.UmengUpdateListener;
 import com.umeng.update.UpdateResponse;
@@ -96,8 +102,6 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 		initConfig();
 		initAd(view);
 
-		setUMUpdateListener();
-
 		new MainTask().execute(URL, Constants.DEF_TASK_TYPE.REFRESH);
 
 		return view;
@@ -114,18 +118,15 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 					Toast.makeText(getActivity(), "发现更新", Toast.LENGTH_SHORT)
 							.show();
 					break;
-				case UpdateStatus.No: // has no
-										// update
-					Toast.makeText(getActivity(), "没有更新", Toast.LENGTH_SHORT)
+				case UpdateStatus.No: // has noupdate
+					Toast.makeText(getActivity(), "当前为最新版本", Toast.LENGTH_SHORT)
 							.show();
 					break;
-				case UpdateStatus.NoneWifi: // none
-											// wifi
+				case UpdateStatus.NoneWifi: // none wifi
 					Toast.makeText(getActivity(), "没有wifi连接， 只在wifi下更新",
 							Toast.LENGTH_SHORT).show();
 					break;
-				case UpdateStatus.Timeout: // time
-											// out
+				case UpdateStatus.Timeout: // time out
 					Toast.makeText(getActivity(), "超时", Toast.LENGTH_SHORT)
 							.show();
 					break;
@@ -135,6 +136,11 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 		});
 	}
 
+	/**
+	 * 查找控件
+	 * 
+	 * @param view
+	 */
 	private void findViews(View view) {
 		mScrollView = (PullScrollView) view.findViewById(R.id.scroll_view);
 		mHeadImg = (ImageView) view.findViewById(R.id.background_img);
@@ -165,7 +171,7 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 		case R.id.checkUpdateView:// 手动强制更新
 			UmengUpdateAgent.setDefault();
 			UmengUpdateAgent.forceUpdate(getActivity());
-
+			setUMUpdateListener();
 			break;
 		case R.id.aboutView: // 关于
 			Intent intent = new Intent(getActivity(), AboutActivity.class);
@@ -211,7 +217,6 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 		mUMImgBitmap = new UMImage(mContext, bitmap);
 		mController.setShareImage(mUMImgBitmap);
 		mController.setAppWebSite(""); // 设置应用地址
-		
 
 		// 添加新浪和qq空间的SSO授权支持
 		mController.getConfig().setSsoHandler(new SinaSsoHandler());
@@ -219,7 +224,7 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 		mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
 
 		// wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里需要替换成你注册的AppID
-		String appID = "wx967daebe835fbeac";
+		String appID = "wx880cb2b22509cf25";
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(getActivity(), appID);
 		wxHandler.addToSocialSDK();
@@ -227,6 +232,27 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 		UMWXHandler wxCircleHandler = new UMWXHandler(getActivity(), appID);
 		wxCircleHandler.setToCircle(true);
 		wxCircleHandler.addToSocialSDK();
+
+		// 设置微信好友分享内容
+		WeiXinShareContent weixinContent = new WeiXinShareContent();
+		// 设置分享文字
+		weixinContent.setShareContent(mShareContent);
+		// 设置title
+		weixinContent.setTitle("小巫CSDN博客客户端");
+		// 设置分享内容跳转URL
+		weixinContent.setTargetUrl("你的http://blog.csdn.net/wwj_748链接");
+		// 设置分享图片
+		weixinContent.setShareImage(mUMImgBitmap);
+		mController.setShareMedia(weixinContent);
+
+		// 设置微信朋友圈分享内容
+		CircleShareContent circleMedia = new CircleShareContent();
+		circleMedia.setShareContent(mShareContent);
+		// 设置朋友圈title
+		circleMedia.setTitle("小巫CSDN博客客户端");
+		circleMedia.setShareImage(mUMImgBitmap);
+		circleMedia.setTargetUrl("你的http://blog.csdn.net/wwj_748链接");
+		mController.setShareMedia(circleMedia);
 
 		// 参数1为当前Activity，参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
 		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(getActivity(),
@@ -254,7 +280,7 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 		// 添加email
 		EmailHandler emailHandler = new EmailHandler();
 		emailHandler.addToSocialSDK();
-		
+
 		QQShareContent qqShareContent = new QQShareContent();
 		qqShareContent.setShareContent(mShareContent);
 		qqShareContent.setTitle("小巫CSDN博客");
@@ -262,8 +288,22 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 		qqShareContent.setTargetUrl("http://blog.csdn.net/wwj_748");
 		mController.setShareMedia(qqShareContent);
 
+		QZoneShareContent qzone = new QZoneShareContent();
+		// 设置分享文字
+		qzone.setShareContent(mShareContent);
+		// 设置点击消息的跳转URL
+		qzone.setTargetUrl("http://blog.csdn.net/wwj_748");
+		// 设置分享内容的标题
+		qzone.setTitle("小巫CSDN博客");
+		// 设置分享图片
+		qzone.setShareImage(mUMImgBitmap);
+		mController.setShareMedia(qzone);
+
 	}
 
+	/**
+	 * 打开分享盘
+	 */
 	private void openShareBoard() {
 		mController.openShare(getActivity(), false);
 
@@ -274,35 +314,49 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 		new MainTask().execute(URL, Constants.DEF_TASK_TYPE.REFRESH);
 	}
 
+	/**
+	 * 初始化广告
+	 * @param view
+	 */
 	public void initAd(View view) {
 		// 初始化接口，应用启动的时候调用
 		// 参数：appId, appSecret, 调试模式
 		AdManager.getInstance(getActivity()).init("8df70b90ebf86823",
 				"b7659d08439c052b", false);
-		// 广告条接口调用（适用于应用）
-		// 将广告条adView添加到需要展示的layout控件中
-		LinearLayout adLayout = (LinearLayout) view.findViewById(R.id.adLayout);
-		AdView adView = new AdView(getActivity(), AdSize.FIT_SCREEN);
-		adLayout.addView(adView);
+//		// 广告条接口调用（适用于应用）
+//		// 将广告条adView添加到需要展示的layout控件中
+//		LinearLayout adLayout = (LinearLayout) view.findViewById(R.id.adLayout);
+//		AdView adView = new AdView(getActivity(), AdSize.FIT_SCREEN);
+//		adLayout.addView(adView);
+		
+		//普通布局，适用于应用
+        //获取要嵌入迷你广告条的布局
+        RelativeLayout adLayout =(RelativeLayout)view.findViewById(R.id.adLayout);
+        //demo 1 迷你Banner : 宽满屏，高32dp
+        DiyBanner banner = new DiyBanner(getActivity(), DiyAdSize.SIZE_MATCH_SCREENx32);//传入高度为32dp的AdSize来定义迷你Banner    
+        //demo 2 迷你Banner : 宽320dp，高32dp
+        //DiyBanner banner = new DiyBanner(this, DiyAdSize.SIZE_320x32);//传入高度为32dp的AdSize来定义迷你Banner 
+        //将积分Banner加入到布局中
+        adLayout.addView(banner);
 
 		// 监听广告条接口
-		adView.setAdListener(new AdViewListener() {
-
-			@Override
-			public void onSwitchedAd(AdView arg0) {
-				Log.i("YoumiAdDemo", "广告条切换");
-			}
-
-			@Override
-			public void onReceivedAd(AdView arg0) {
-				Log.i("YoumiAdDemo", "请求广告成功");
-			}
-
-			@Override
-			public void onFailedToReceivedAd(AdView arg0) {
-				Log.i("YoumiAdDemo", "请求广告失败");
-			}
-		});
+//		adView.setAdListener(new AdViewListener() {
+//
+//			@Override
+//			public void onSwitchedAd(AdView arg0) {
+//				Log.i("YoumiAdDemo", "广告条切换");
+//			}
+//
+//			@Override
+//			public void onReceivedAd(AdView arg0) {
+//				Log.i("YoumiAdDemo", "请求广告成功");
+//			}
+//
+//			@Override
+//			public void onFailedToReceivedAd(AdView arg0) {
+//				Log.i("YoumiAdDemo", "请求广告失败");
+//			}
+//		});
 
 		// 插播接口调用
 		// 开发者可以到开发者后台设置展示频率，需要到开发者后台设置页面（详细信息->业务信息->无积分广告业务->高级设置）
@@ -335,7 +389,6 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 		@Override
 		protected Blogger doInBackground(String... params) {
 			String temp = HttpUtil.httpGet(params[0]);
-
 			Blogger blogger = JsoupUtil.getBloggerInfo(temp);
 			return blogger;
 		}
@@ -343,6 +396,9 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 		@Override
 		protected void onPostExecute(Blogger result) {
 			super.onPostExecute(result);
+			if (result == null) {
+				return;
+			}
 			String[] rank = result.getRank().split("\\|");
 			String visitNum = rank[0];
 			String jifenNum = rank[1];
@@ -372,6 +428,7 @@ public class PersonCenterFragment extends Fragment implements OnClickListener,
 
 	@Override
 	public void onDestroy() {
+		// 取消注册监听
 		SpotManager.getInstance(getActivity()).unregisterSceenReceiver();
 		super.onDestroy();
 	}

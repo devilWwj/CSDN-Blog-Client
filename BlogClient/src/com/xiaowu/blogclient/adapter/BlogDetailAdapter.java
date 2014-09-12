@@ -10,7 +10,6 @@ import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -24,6 +23,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.xiaowu.blogclient.R;
 import com.xiaowu.blogclient.model.Blog;
 import com.xiaowu.blogclient.util.Constants;
+import com.xiaowu.blogclient.util.FileUtil;
 import com.xiaowu.blogclient.util.MyTagHandler;
 
 /**
@@ -134,11 +134,11 @@ public class BlogDetailAdapter extends BaseAdapter {
 						R.layout.article_detail_code_item, null);
 				holder.code = (WebView) convertView
 						.findViewById(R.id.code_view);
-//				holder.code.getSettings().setUseWideViewPort(true);
-//				holder.code.getSettings().setJavaScriptEnabled(true);
-//				holder.code.getSettings().setSupportZoom(true);
-//				holder.code.getSettings().setBuiltInZoomControls(false);
-//				holder.code.getSettings().setLoadWithOverviewMode(true);
+				// holder.code.getSettings().setUseWideViewPort(true);
+				// holder.code.getSettings().setJavaScriptEnabled(true);
+				// holder.code.getSettings().setSupportZoom(true);
+				// holder.code.getSettings().setBuiltInZoomControls(false);
+				// holder.code.getSettings().setLoadWithOverviewMode(true);
 				break;
 			}
 
@@ -146,7 +146,7 @@ public class BlogDetailAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		System.out.println(item.getContent());
+		// System.out.println(item.getContent());
 
 		if (null != item) {
 			switch (item.getState()) {
@@ -155,8 +155,23 @@ public class BlogDetailAdapter extends BaseAdapter {
 						options);
 				break;
 			case Constants.DEF_BLOG_ITEM_TYPE.CODE: // 代码，格式显示
-				holder.code.loadDataWithBaseURL(null, item.getContent(),
+
+				// 读取代码文件和模板文件
+				String code = item.getContent();
+				// String code = FileUtil.getFileContent(context,
+				// "AboutActivity.java");
+				String template = FileUtil.getFileContent(context, "code.html");
+				// 生成结果
+				String html = template.replace("{{code}}", code);
+				holder.code.getSettings().setDefaultTextEncodingName("utf-8");
+				holder.code.getSettings().setSupportZoom(true);
+				holder.code.getSettings().setBuiltInZoomControls(true);
+
+				// holder.code.loadUrl("file:///android_asset/code.html");
+
+				holder.code.loadDataWithBaseURL("file:///android_asset/", html,
 						"text/html", "utf-8", null);
+
 				break;
 			default:
 				holder.content.setText(Html.fromHtml(item.getContent(), null,

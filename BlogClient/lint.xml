@@ -2,6 +2,7 @@
 <lint>
     <issue id="DefaultLocale" severity="ignore" />
     <issue id="NewApi" severity="ignore" />
+    <issue id="SetJavaScriptEnabled" severity="ignore" />
     <issue id="ShowToast" severity="ignore" />
     <issue id="ValidFragment" severity="ignore" />
 </lint>

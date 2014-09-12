@@ -72,7 +72,7 @@ public class BlogFrag extends Fragment implements IXListViewRefreshListener,
 			blogListView.startRefresh(); // 开始刷新
 
 		} else {
-			blogListView.NotRefreshAtBegin();
+			blogListView.NotRefreshAtBegin(); // 不开始刷新
 		}
 		Log.e("NewsFrag", "onActivityCreate");
 		super.onActivityCreated(savedInstanceState);
@@ -150,22 +150,22 @@ public class BlogFrag extends Fragment implements IXListViewRefreshListener,
 			// 通知列表数据更新
 			adapter.notifyDataSetChanged();
 			switch (result) {
-			case Constants.DEF_RESULT_CODE.ERROR:
+			case Constants.DEF_RESULT_CODE.ERROR: // 错误
 				Toast.makeText(getActivity(), "网络信号不佳", Toast.LENGTH_LONG);
 				blogListView.stopRefresh(getDate());
 				blogListView.stopLoadMore();
 				break;
-			case Constants.DEF_RESULT_CODE.NO_DATA:
+			case Constants.DEF_RESULT_CODE.NO_DATA: // 无数据
 				// Toast.makeText(getActivity(), "无更多加载内容", Toast.LENGTH_LONG)
 				// .show();
 				blogListView.stopLoadMore();
 				// noBlogView.setVisibility(View.VISIBLE); // 显示无博客
 				break;
-			case Constants.DEF_RESULT_CODE.REFRESH:
+			case Constants.DEF_RESULT_CODE.REFRESH: // 刷新
 				blogListView.stopRefresh(getDate());
-				// 保存到数据库
+
 				db.delete(blogType);
-				db.insert(adapter.getList());
+				db.insert(adapter.getList());// 保存到数据库
 				if (adapter.getCount() == 0) {
 					noBlogView.setVisibility(View.VISIBLE); // 显示无博客
 				}

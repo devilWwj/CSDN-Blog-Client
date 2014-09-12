@@ -63,25 +63,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 主界面标签切换界面 -->
         <activity
             android:name="com.xiaowu.blogclient.MainTabActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme" >
         </activity>
+        <!-- 博客详细内容界面 -->
         <activity
             android:name="com.xiaowu.blogclient.BlogDetailActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <!-- 博客图片界面 -->
         <activity
             android:name="com.xiaowu.blogclient.ImageActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar" >
         </activity>
+        <!-- 博客评论列表界面 -->
         <activity
             android:name="com.xiaowu.blogclient.BlogCommentActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light" >
         </activity>
+        <!-- 关于界面 -->
         <activity
             android:name="com.xiaowu.blogclient.AboutActivity"
             android:screenOrientation="portrait"
@@ -114,7 +119,6 @@
             android:name="com.umeng.update.net.DownloadingService"
             android:process=":DownloadingService" >
         </service>
-        
 
         <!-- *************************    分享相关的注册 START **************************** -->
         <!-- 分享内容编辑页 -->
@@ -198,8 +202,8 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-        
-         <!-- 有米渠道号(可选配置) 渠道号不能带空格，类型为整数 -->
+
+        <!-- 有米渠道号(可选配置) 渠道号不能带空格，类型为整数 -->
         <meta-data
             android:name="YOUMI_CHANNEL"
             android:value="0" >

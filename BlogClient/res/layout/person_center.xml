@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="4dp"
-                    android:background="@null"
+                    android:background="@color/transparent"
                     android:src="@drawable/ico_expert" />
             </LinearLayout>
 
@@ -228,7 +228,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:focusable="false"
-                    android:src="@drawable/main_small_next" />
+                    android:src="@drawable/app_recommend_arrow" />
             </RelativeLayout>
 
             <ImageView
@@ -260,7 +260,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:focusable="false"
-                    android:src="@drawable/main_small_next" />
+                    android:src="@drawable/app_recommend_arrow" />
             </RelativeLayout>
 
             <ImageView
@@ -292,7 +292,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:focusable="false"
-                    android:src="@drawable/main_small_next" />
+                    android:src="@drawable/app_recommend_arrow" />
             </RelativeLayout>
 
             <ImageView
@@ -306,7 +306,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/list_selector"
-                android:text="爱我就点我一下" />
+                android:text="展示插播广告" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -314,13 +314,12 @@
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/biz_pc_account_line" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/adLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal" >
-            </LinearLayout>
+                android:gravity="center_horizontal" >
+            </RelativeLayout>
         </LinearLayout>
     </com.xiaowu.blogclient.view.PullScrollView>
 
